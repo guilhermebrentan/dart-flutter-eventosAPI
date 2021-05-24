@@ -1,0 +1,15 @@
+create table empTiposDeEvento(
+idTipoDeEvento int         primary key,
+nome           varchar(60) not null
+)
+
+insert into empTiposDeEvento values (1 , 'Reunião')
+insert into empTiposDeEvento values (2 , 'Mini Curso')
+insert into empTiposDeEvento values (3 , 'Palestra')
+insert into empTiposDeEvento values (4 , 'Apresentação')
+insert into empTiposDeEvento values (5 , 'Brainstorming')
+insert into empTiposDeEvento values (6 , 'Etapas do Scrum: Backlog do Produto')
+insert into empTiposDeEvento values (7 , 'Etapas do Scrum: Sprint Backlog')
+insert into empTiposDeEvento values (8 , 'Etapas do Scrum: Daily Meeting')
+insert into empTiposDeEvento values (9 , 'Etapas do Scrum: Sprint Review')
+insert into empTiposDeEvento values (10, 'Etapas do Scrum: Print Retrospective')

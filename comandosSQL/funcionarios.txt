@@ -1,0 +1,14 @@
+create table empFuncionarios(
+idFuncionario int         primary key,
+nome          varchar(50)  not null,
+apelido       varchar(20)  not null,
+departamento  varchar(30)  not null,
+foto          varchar(100) not null
+)
+
+insert into empFuncionarios values (1, 'Guilherme Brentan', 'Guido'    , 'Desenvolvimento de Sistemas', 'https://i.pinimg.com/originals/b5/dc/a9/b5dca9fac1361023498d6cb66e4d8b13.jpg'                       )
+insert into empFuncionarios values (2, 'Mateus Cleto'     , 'Cleto'    , 'Análise de Sistemas'        , 'https://cotuca.unicamp.br/cotuca/wp-content/uploads/2021/02/Mateus-Cleto-scaled.jpg'                )
+insert into empFuncionarios values (3, 'Henrique Afonso'  , 'Fonso'    , 'Artes Visuais'              , 'https://upload.wikimedia.org/wikipedia/pt/a/ae/Henrique_Afonso_da_Silva_Horta.jpg'                  )
+insert into empFuncionarios values (4, 'Muricy Ramalho'   , 'Professor', 'Análise de Resultados'      , 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW63MBji56zODATHPboWWvw8BR95Lf8gP1Rg&usqp=CAU')
+insert into empFuncionarios values (5, 'Gabriel Barbosa'  , 'Gabigol'  , 'Marketing'                  , 'https://static-wp-tor15-prd.torcedores.com/wp-content/uploads/2019/11/gabigol-do-flamengo.jpg'      )
+insert into empFuncionarios values (6, 'Heran Crespo'     , 'Crespo'   , 'Recursos Huamnos'           , 'https://pbs.twimg.com/profile_images/1360306422848888835/_GVLIvVV_400x400.jpg'                      )

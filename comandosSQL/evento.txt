@@ -1,0 +1,9 @@
+create table empEvento(
+idEvento       int identity(1,1) primary key,
+participantes  varchar(30)       not null,
+dia            varchar(5)        not null,
+horario        varchar(5)        not null,
+idTipoDeEvento int               not null,
+
+FOREIGN KEY (idTipoDeEvento) REFERENCES empTiposDeEvento(idTipoDeEvento)
+)
