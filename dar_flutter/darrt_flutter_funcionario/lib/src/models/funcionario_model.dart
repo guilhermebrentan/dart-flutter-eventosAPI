@@ -5,6 +5,8 @@ class Funcionario {
   String departamento;
   String foto;
 
+  var funcionarios = [];
+
   Funcionario(
     this.id,
     this.nome,
@@ -13,7 +15,7 @@ class Funcionario {
     this.foto,
   );
 
-  static void fromJson(List<dynamic> json) {
+  void fromJson(List<dynamic> json) {
     funcionarios.clear();
     for (var funcionario in json) {
       funcionarios.add(Funcionario(
@@ -22,9 +24,7 @@ class Funcionario {
           funcionario['apelido'],
           funcionario['departamento'],
           funcionario['foto']));
-      print(funcionario);
     }
+    print(funcionarios);
   }
 }
-
-var funcionarios = [];

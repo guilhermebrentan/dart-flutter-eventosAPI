@@ -7,13 +7,15 @@ class Conexao {
   static var json;
   static var api = "192.168.15.11:3000";
 
-  static Future<bool> getDados() async {
+  static Future<Funcionario> getDados() async {
+    Funcionario funcionario =
+        new Funcionario(23, 'nome', 'apelido', 'departamento', 'foto');
     try {
       json = await http.get(Uri.http(api, 'funcionarios'));
-      Funcionario.fromJson(jsonDecode(json.body));
+      funcionario.fromJson(jsonDecode(json.body));
     } catch (Exception) {
       print(Exception);
     }
-    return true;
+    return funcionario;
   }
 }
