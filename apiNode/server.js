@@ -53,22 +53,38 @@ var funcionarios = [
 
 ];
 var locais = [
-    { id: 1, nome: "Sala do Café" },
-    { id: 2, nome: "Refeitório" },
-    { id: 3, nome: "Sala de Reuniões" },
-    { id: 4, nome: "Escritório Central" }
+    { 
+        id: 1, 
+        nome: "Sala do Café",
+        foto: "https://imagens-revista.vivadecora.com.br/uploads/2018/06/cantinho-do-caf%C3%A9-na-sala-de-jantar-Foto-Decorando-Tudo.jpg"
+    },
+    { 
+        id: 2, 
+        nome: "Refeitório",
+        foto: "https://blog.controlle.com/wp-content/uploads/2014/04/Refeit%C3%B3rio-GSK.jpg"
+    },
+    { 
+        id: 3, 
+        nome: "Sala de Reuniões",
+        foto: "https://businessvillage.com.br/wp-content/uploads/2020/04/sala-reuniao-curitiba-business-village.jpg"
+    },
+    { 
+        id: 4, 
+        nome: "Escritório Central",
+        foto: "https://cdn.dooca.store/607/products/whatsapp-image-2020-08-20-at-173702-1.jpeg?v=1598022639"
+    }
 ];
 
 var tiposDeEvento = [
-    { id: 1, nome: "Reunião" },
-    { id: 2, nome: "Mini Curso" },
-    { id: 3, nome: "Palestra" },
-    { id: 4, nome: "Apresentação" },
-    { id: 5, nome: "Brainstorming" },
-    { id: 6, nome: "Etapas do Scrum: Backlog do produto" },
-    { id: 7, nome: "Etapas do Scrum: Sprint Backlog" },
-    { id: 8, nome: "Etapas do Scrum: Daily Meeting" },
-    { id: 9, nome: "Etapas do Scrum: Sprint Review" },
+    { id: 1,  nome: "Reunião" },
+    { id: 2,  nome: "Mini Curso" },
+    { id: 3,  nome: "Palestra" },
+    { id: 4,  nome: "Apresentação" },
+    { id: 5,  nome: "Brainstorming" },
+    { id: 6,  nome: "Etapas do Scrum: Backlog do produto" },
+    { id: 7,  nome: "Etapas do Scrum: Sprint Backlog" },
+    { id: 8,  nome: "Etapas do Scrum: Daily Meeting" },
+    { id: 9,  nome: "Etapas do Scrum: Sprint Review" },
     { id: 10, nome: "Etapas do Scrum: Print Restrospective" }
 ];
 
