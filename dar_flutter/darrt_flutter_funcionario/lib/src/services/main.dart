@@ -6,28 +6,60 @@ var funcionarios = [];
 void main() {
   runApp(
     MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Home(),
-    ),
+        debugShowCheckedModeBanner: false,
+        home: DefaultTabController(
+          length: 3,
+          initialIndex: 1,
+          child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.blueAccent,
+                title: Text(
+                  'Funcionários',
+                ),
+                bottom: TabBar(
+                  tabs: <Widget>[
+                    Tab(icon: Icon(Icons.add)),
+                    Tab(icon: Icon(Icons.list)),
+                    Tab(icon: Icon(Icons.edit)),
+                  ],
+                ),
+              ),
+              body: TabBarView(children: [
+                buildContainerCriar(),
+                buildContainerFuncionario(),
+                buildContainerListar(),
+              ])),
+        )),
   );
 }
 
-class Home extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blueAccent,
-          title: Text(
-            'Funcionários',
-          ),
-        ),
-        body: buildContainer());
-  }
-}
+// class Home extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(
+//           backgroundColor: Colors.blueAccent,
+//           title: Text(
+//             'Funcionários',
+//           ),
+//           bottom: TabBar(
+//             tabs: [
+//               Tab(icon: Icon(Icons.plus_one)),
+//               Tab(icon: Icon(Icons.list)),
+//               Tab(icon: Icon(Icons.edit))
+//             ],
+//           ),
+//         ),
+//         body: TabBarView(children: [
+//           buildContainerFuncionario(),
+//           buildContainerCriar(),
+//           buildContainerListar(),
+//         ]));
+//   }
+// }
 
-buildContainer() {
-  return FutureBuilder<String>(
+buildContainerFuncionario() {
+  return new FutureBuilder<String>(
     future: getFuncionarios(),
     builder: (context, snapshot) {
       switch (snapshot.connectionState) {
@@ -118,6 +150,30 @@ buildContainer() {
           }
       }
     },
+  );
+}
+
+buildContainerCriar() {
+  return new Container(
+    color: Colors.deepOrangeAccent,
+    child: new Center(
+      child: new Text(
+        "Primeira Guia",
+        style: TextStyle(),
+      ),
+    ),
+  );
+}
+
+buildContainerListar() {
+  return new Container(
+    color: Colors.blueGrey,
+    child: new Center(
+      child: new Text(
+        "Segunda guia",
+        style: TextStyle(),
+      ),
+    ),
   );
 }
 
