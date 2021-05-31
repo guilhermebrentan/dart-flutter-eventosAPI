@@ -42,4 +42,12 @@ class Conexao {
     }
     return tipo;
   }
+
+  static postEvento(String comando) async {
+    try {
+      json = await http.post(Uri.http(api, 'eventos/' + comando));
+    } catch (Exception) {
+      print(Exception);
+    }
+  }
 }

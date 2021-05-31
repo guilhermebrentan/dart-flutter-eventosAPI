@@ -2,20 +2,24 @@ import 'package:darrt_flutter_funcionario/src/models/locais_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/tipos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:darrt_flutter_funcionario/src/models/funcionario_model.dart';
 import 'package:darrt_flutter_funcionario/src/conexao/conexao.dart';
 
 var funcionarios = [];
 var locais = [];
 var tipos = [];
-var localSelecionado;
-var tipoSelecionado;
 String nomeCidade = "";
 
 void main() {
   runApp(
     MaterialApp(
         debugShowCheckedModeBanner: true,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        supportedLocales: [const Locale('pt', 'BR')],
         home: DefaultTabController(
           length: 3,
           initialIndex: 1,
@@ -151,6 +155,10 @@ class _DropDownState extends State<CriarEvento> {
   var func5 = false;
   var func6 = false;
   var id;
+  var dataSelecionada;
+  var horaSelecionada;
+  var localSelecionado;
+  var tipoSelecionado;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -269,7 +277,10 @@ class _DropDownState extends State<CriarEvento> {
             isExpanded: true,
             items: tipos.map((item) {
               return DropdownMenuItem(
-                child: Text(item.nome),
+                child: new Align(
+                  alignment: Alignment.center,
+                  child: Text(item.nome),
+                ),
                 value: item.id,
               );
             }).toList(),
@@ -279,6 +290,84 @@ class _DropDownState extends State<CriarEvento> {
                 print(tipoSelecionado);
               });
             }),
+        ListTile(
+          leading: Text(
+            "Digite a data: ",
+            style: TextStyle(fontSize: 20.0),
+          ),
+          title: TextField(
+            decoration: InputDecoration(
+                border: InputBorder.none, hintText: "xx de mês"),
+            textAlign: TextAlign.justify,
+            onChanged: (var value) {
+              setState(() {
+                dataSelecionada = value;
+                print(dataSelecionada);
+              });
+            },
+          ),
+        ),
+        ListTile(
+          leading: Text(
+            "Digite o horário: ",
+            style: TextStyle(fontSize: 20.0),
+          ),
+          title: TextField(
+            decoration:
+                InputDecoration(border: InputBorder.none, hintText: "hora:min"),
+            textAlign: TextAlign.justify,
+            onChanged: (var value) {
+              setState(() {
+                horaSelecionada = value;
+                print(horaSelecionada);
+              });
+            },
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+                onPressed: () {
+                  String participantes = '';
+
+                  if (func1 == true) participantes += '1;';
+
+                  if (func2 == true) participantes += '2;';
+
+                  if (func3 == true) participantes += '3;';
+
+                  if (func4 == true) participantes += '4;';
+
+                  if (func5 == true) participantes += '5;';
+
+                  if (func6 == true) participantes += '6;';
+
+                  String comando;
+
+                  comando = id.toString() +
+                      '/' +
+                      participantes.toString() +
+                      '/' +
+                      dataSelecionada.toString() +
+                      '/' +
+                      horaSelecionada.toString() +
+                      '/' +
+                      localSelecionado.toString() +
+                      '/' +
+                      tipoSelecionado.toString();
+
+                  Conexao.postEvento(comando);
+                },
+                child: Text("Criar")),
+            Text("   "),
+            ElevatedButton(
+                onPressed: () {
+                  print('clicou');
+                },
+                child: Text("Limpar")),
+          ],
+        )
       ],
     )));
   }
