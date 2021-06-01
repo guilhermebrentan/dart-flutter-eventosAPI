@@ -1,5 +1,6 @@
 //import 'dart:collection';
 import 'dart:convert';
+import 'package:darrt_flutter_funcionario/src/models/eventos_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/funcionario_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/locais_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/tipos_model.dart';
@@ -42,6 +43,17 @@ class Conexao {
       print(Exception);
     }
     return tipo;
+  }
+
+  static Future<Eventos> getEventos() async {
+    Eventos eventos = new Eventos(2, 'participantes', 'dia', 'horario', 3, 4);
+    try {
+      json = await http.get(Uri.http(api, 'eventos'));
+      eventos.fromJson(jsonDecode(json.body));
+    } catch (Exception) {
+      print(Exception);
+    }
+    return eventos;
   }
 
   static Future<Resultados> postEvento(String comando) async {

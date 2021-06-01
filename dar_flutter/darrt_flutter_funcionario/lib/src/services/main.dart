@@ -1,6 +1,7 @@
 import 'package:darrt_flutter_funcionario/src/models/locais_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/tipos_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/resultados_model.dart';
+import 'package:darrt_flutter_funcionario/src/models/eventos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -10,6 +11,7 @@ import 'package:darrt_flutter_funcionario/src/conexao/conexao.dart';
 var funcionarios = [];
 var locais = [];
 var tipos = [];
+var eventos = [];
 var resultado;
 String nomeCidade = "";
 
@@ -38,6 +40,9 @@ void main() {
                     Tab(icon: Icon(Icons.list)),
                     Tab(icon: Icon(Icons.edit)),
                   ],
+                  onTap: (var value) {
+                    getEventos();
+                  },
                 ),
               ),
               body: TabBarView(children: [
@@ -495,7 +500,33 @@ class _DropDownState extends State<CriarEvento> {
 }
 
 buildContainerListar() {
-  return new Container();
+  return new FutureBuilder<String>(
+    future: getEventos(),
+    builder: (context, snapshot) {
+      switch (snapshot.connectionState) {
+        case ConnectionState.waiting:
+          return Center(child: CircularProgressIndicator());
+        default:
+          if (eventos.length == 0) {
+            return Center(
+              child: Text("Não há reuniões agendadas"),
+            );
+          } else {
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: CircleAvatar(
+                      backgroundImage:
+                          NetworkImage(locais[eventos[index].local - 1].foto),
+                      radius: 30),
+                  title: Text('${locais[eventos[index].local - 1].nome}'),
+                );
+              },
+            );
+          }
+      }
+    },
+  );
 }
 
 Future<String> getDados() async {
@@ -539,4 +570,11 @@ Future<Resultados> criarEvento(var comando) async {
 
   resultado = resultados.resultado;
   return resultados;
+}
+
+Future<String> getEventos() async {
+  final Eventos resultadoEventos = await Conexao.getEventos();
+  eventos = resultadoEventos.eventos;
+
+  return 'ok';
 }
