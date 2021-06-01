@@ -1,5 +1,6 @@
 import 'package:darrt_flutter_funcionario/src/models/locais_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/tipos_model.dart';
+import 'package:darrt_flutter_funcionario/src/models/resultados_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,6 +10,7 @@ import 'package:darrt_flutter_funcionario/src/conexao/conexao.dart';
 var funcionarios = [];
 var locais = [];
 var tipos = [];
+var resultado;
 String nomeCidade = "";
 
 void main() {
@@ -329,35 +331,154 @@ class _DropDownState extends State<CriarEvento> {
           children: <Widget>[
             ElevatedButton(
                 onPressed: () {
-                  String participantes = '';
+                  if (id != null) {
+                    String participantes = '';
 
-                  if (func1 == true) participantes += '1;';
+                    if (func1 == true) participantes += '1;';
 
-                  if (func2 == true) participantes += '2;';
+                    if (func2 == true) participantes += '2;';
 
-                  if (func3 == true) participantes += '3;';
+                    if (func3 == true) participantes += '3;';
 
-                  if (func4 == true) participantes += '4;';
+                    if (func4 == true) participantes += '4;';
 
-                  if (func5 == true) participantes += '5;';
+                    if (func5 == true) participantes += '5;';
 
-                  if (func6 == true) participantes += '6;';
+                    if (func6 == true) participantes += '6;';
 
-                  String comando;
+                    if (participantes != '') {
+                      if (dataSelecionada != null) {
+                        if (horaSelecionada != null) {
+                          if (localSelecionado != null) {
+                            if (tipoSelecionado != null) {
+                              String comando;
 
-                  comando = id.toString() +
-                      '/' +
-                      participantes.toString() +
-                      '/' +
-                      dataSelecionada.toString() +
-                      '/' +
-                      horaSelecionada.toString() +
-                      '/' +
-                      localSelecionado.toString() +
-                      '/' +
-                      tipoSelecionado.toString();
+                              comando = id.toString() +
+                                  '/' +
+                                  participantes.toString() +
+                                  '/' +
+                                  dataSelecionada.toString() +
+                                  '/' +
+                                  horaSelecionada.toString() +
+                                  '/' +
+                                  localSelecionado.toString() +
+                                  '/' +
+                                  tipoSelecionado.toString();
 
-                  Conexao.postEvento(comando);
+                              criarEvento(comando);
+
+                              if (resultado == "deu certo") {
+                                AlertDialog alerta = AlertDialog(
+                                  title: Text("Evento marcado"),
+                                  content: Text("Evento marcado com sucesso"),
+                                  actions: [],
+                                );
+
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return alerta;
+                                  },
+                                );
+                              } else {
+                                AlertDialog alerta = AlertDialog(
+                                  title: Text("Erro desconhecido"),
+                                  content: Text("Tente novamente mais tarde"),
+                                  actions: [],
+                                );
+
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return alerta;
+                                  },
+                                );
+                              }
+                            } else {
+                              AlertDialog alerta = AlertDialog(
+                                title: Text("Problema ao criar"),
+                                content:
+                                    Text("Diga qual será o tipo da reunião"),
+                                actions: [],
+                              );
+
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alerta;
+                                },
+                              );
+                            }
+                          } else {
+                            AlertDialog alerta = AlertDialog(
+                              title: Text("Problema ao criar"),
+                              content: Text("Diga onde será a reunião"),
+                              actions: [],
+                            );
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alerta;
+                              },
+                            );
+                          }
+                        } else {
+                          AlertDialog alerta = AlertDialog(
+                            title: Text("Problema ao criar"),
+                            content: Text("Diga o horário da reunião"),
+                            actions: [],
+                          );
+
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alerta;
+                            },
+                          );
+                        }
+                      } else {
+                        AlertDialog alerta = AlertDialog(
+                          title: Text("Problema ao criar"),
+                          content: Text("DIga em que data ocorrerá a reunião"),
+                          actions: [],
+                        );
+
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return alerta;
+                          },
+                        );
+                      }
+                    } else {
+                      AlertDialog alerta = AlertDialog(
+                        title: Text("Problema ao criar"),
+                        content: Text("Diga quem vai participar da reunião"),
+                        actions: [],
+                      );
+
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return alerta;
+                        },
+                      );
+                    }
+                  } else {
+                    AlertDialog alerta = AlertDialog(
+                      title: Text("Problema ao criar"),
+                      content: Text("Preencha o ID"),
+                      actions: [],
+                    );
+
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return alerta;
+                      },
+                    );
+                  }
                 },
                 child: Text("Criar")),
             Text("   "),
@@ -411,4 +532,11 @@ Future<String> getDados() async {
   locais = resultadoLocais.locais;
   tipos = resultadoTipos.tipos;
   return response;
+}
+
+Future<Resultados> criarEvento(var comando) async {
+  final Resultados resultados = await Conexao.postEvento(comando);
+
+  resultado = resultados.resultado;
+  return resultados;
 }

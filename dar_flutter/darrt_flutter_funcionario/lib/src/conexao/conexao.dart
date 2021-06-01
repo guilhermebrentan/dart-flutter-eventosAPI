@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:darrt_flutter_funcionario/src/models/funcionario_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/locais_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/tipos_model.dart';
+import 'package:darrt_flutter_funcionario/src/models/resultados_model.dart';
 import 'package:http/http.dart' as http;
 
 class Conexao {
@@ -43,11 +44,14 @@ class Conexao {
     return tipo;
   }
 
-  static postEvento(String comando) async {
+  static Future<Resultados> postEvento(String comando) async {
+    Resultados resultados = new Resultados('resultado');
     try {
       json = await http.post(Uri.http(api, 'eventos/' + comando));
+      resultados.fromJson(json.body);
     } catch (Exception) {
       print(Exception);
     }
+    return resultados;
   }
 }

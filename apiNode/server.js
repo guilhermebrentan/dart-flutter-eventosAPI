@@ -131,6 +131,8 @@ app.post('/eventos/:id/:participantes/:dia/:horario/:local/:idTipo', (req, res) 
         idTipo       : idTipo 
     });
     console.log("Evento marcado");
+    res.header('Access-Control-Allow-Origin', '*')
+        .send(200, "deu certo");
 });
 
 
