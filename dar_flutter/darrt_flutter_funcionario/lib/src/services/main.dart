@@ -513,13 +513,41 @@ buildContainerListar() {
             );
           } else {
             return ListView.builder(
+              itemCount: eventos.length,
               itemBuilder: (context, index) {
+                String participantes = eventos[index].participantes;
+                String participantesFormat = '';
+                var partes = participantes.split(';');
+                for (var func in partes) {
+                  if (func != '')
+                    participantesFormat +=
+                        funcionarios[int.parse(func) - 1].nome + '; ';
+                }
                 return ListTile(
                   leading: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(locais[eventos[index].local - 1].foto),
-                      radius: 30),
-                  title: Text('${locais[eventos[index].local - 1].nome}'),
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.black,
+                    child: Text(
+                      (index + 1).toString(),
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    radius: 30.0,
+                  ),
+                  title: Text(
+                    locais[eventos[index].local - 1].nome,
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                  subtitle: Text(
+                    tipos[eventos[index].tipo - 1].nome,
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PaginaDetalhes(
+                                eventos[index], participantesFormat)));
+                  },
                 );
               },
             );
@@ -577,4 +605,53 @@ Future<String> getEventos() async {
   eventos = resultadoEventos.eventos;
 
   return 'ok';
+}
+
+class PaginaDetalhes extends StatelessWidget {
+  final Eventos evento;
+  final String participantes;
+
+  PaginaDetalhes(this.evento, this.participantes);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(locais[evento.local - 1].nome),
+        ),
+        body: detalhes());
+  }
+
+  detalhes() {
+    return ListView(
+      children: <Widget>[
+        Image(
+          image: NetworkImage(locais[evento.local - 1].foto),
+        ),
+        ListTile(
+          leading: Icon(Icons.place),
+          title: Text(locais[evento.local - 1].nome,
+              style: TextStyle(fontSize: 20.0)),
+        ),
+        ListTile(
+          leading: Icon(Icons.person),
+          title: Text(
+            participantes,
+            style: TextStyle(fontSize: 20.0),
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.calendar_today),
+          title: Text(evento.dia, style: TextStyle(fontSize: 20.0)),
+        ),
+        ListTile(
+            leading: Icon(Icons.watch),
+            title: Text(evento.horario, style: TextStyle(fontSize: 20.0))),
+        ListTile(
+          leading: Icon(Icons.info),
+          title: Text(tipos[evento.tipo - 1].nome,
+              style: TextStyle(fontSize: 20.0)),
+        ),
+      ],
+    );
+  }
 }

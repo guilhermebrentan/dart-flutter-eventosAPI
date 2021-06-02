@@ -66,12 +66,12 @@ var locais = [
     { 
         id: 3, 
         nome: "Sala de Reuniões",
-        foto: "https://businessvillage.com.br/wp-content/uploads/2020/04/sala-reuniao-curitiba-business-village.jpg"
+        foto: "https://blog.marelli.com.br/wp-content/uploads/2017/10/sala-de-reunioes.png"
     },
     { 
         id: 4, 
         nome: "Escritório Central",
-        foto: "https://cdn.dooca.store/607/products/whatsapp-image-2020-08-20-at-173702-1.jpeg?v=1598022639"
+        foto: "https://www.officelab.com.br/wp-content/uploads/2019/12/solucoes-em-mobiliario-de-escritorio-conheca-as-vantagens-da-officelab.jpg"
     }
 ];
 
