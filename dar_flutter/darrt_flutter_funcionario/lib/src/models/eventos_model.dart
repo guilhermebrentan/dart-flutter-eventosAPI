@@ -22,6 +22,5 @@ class Eventos {
           int.parse(funcionario['local']),
           int.parse(funcionario['idTipo'])));
     }
-    print(eventos[0].toString());
   }
 }

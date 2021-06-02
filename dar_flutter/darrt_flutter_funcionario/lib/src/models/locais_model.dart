@@ -13,6 +13,5 @@ class Locais {
     for (var local in json) {
       locais.add(Locais(local['id'], local['nome'], local['foto']));
     }
-    print(locais[0].nome);
   }
 }

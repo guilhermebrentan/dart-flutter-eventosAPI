@@ -12,6 +12,5 @@ class Tipos {
     for (var tipo in json) {
       tipos.add(Tipos(tipo['id'], tipo['nome']));
     }
-    print(tipos[0].nome);
   }
 }

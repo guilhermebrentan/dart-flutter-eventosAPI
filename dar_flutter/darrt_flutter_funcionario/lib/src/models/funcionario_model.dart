@@ -25,6 +25,5 @@ class Funcionario {
           funcionario['departamento'],
           funcionario['foto']));
     }
-    print(funcionarios);
   }
 }

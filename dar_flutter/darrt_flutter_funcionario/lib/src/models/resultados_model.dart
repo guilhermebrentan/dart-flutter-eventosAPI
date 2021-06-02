@@ -5,6 +5,5 @@ class Resultados {
 
   void fromJson(var json) {
     resultado = json.toString();
-    print(resultado);
   }
 }
