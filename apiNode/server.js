@@ -148,6 +148,8 @@ app.delete('/eventos/:id?', (req, res) => {
     }
     eventos = novoVetor;
     console.log("Evento deletado")
+    res.header('Access-Control-Allow-Origin', '*')
+        .send(200, "evento excluido");
 });
 
 app.listen(process.env.PORT || 3000);

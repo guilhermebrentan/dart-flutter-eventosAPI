@@ -3,11 +3,13 @@ import 'package:darrt_flutter_funcionario/src/services/telaExibir.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:darrt_flutter_funcionario/src/conexao/conexao.dart';
+import 'package:darrt_flutter_funcionario/src/conexao/email.dart';
 
 var funcionarios = [];
 var locais = [];
 var tipos = [];
 var resultado;
+var email = Email('brentan996@gmail.com', 'Guidomotoca55');
 
 //recebo as informações iniciais necessárias
 receberDadosCriar(var _funcionarios, var _locais, var _tipos) {
@@ -242,10 +244,11 @@ class _DropDownState extends State<TelaCriar> {
                                   '/' +
                                   tipoSelecionado.toString();
 
-                              criarEvento(comando); //crio o evento
+                              final Resultados resultados =
+                                  Conexao.postEvento(comando);
 
                               //se der tudo certo aviso que ocorreu tudo bem, senão aviso que houve um erro externo
-                              if (resultado == "deu certo") {
+                              if (resultados.resultado == "deu certo") {
                                 AlertDialog alerta = AlertDialog(
                                   title: Text("Evento marcado"),
                                   content: Text("Evento marcado com sucesso"),
@@ -272,6 +275,18 @@ class _DropDownState extends State<TelaCriar> {
                                   },
                                 );
                               }
+                              enviarEmail(
+                                  'brentan996@gmail.com',
+                                  'Você está relacionado para uma reunião no AgendaMeet:' +
+                                      'Tipo:' +
+                                      tipos[tipoSelecionado - 1].toString() +
+                                      '\nData: ' +
+                                      dataSelecionada +
+                                      '\nHorario: ' +
+                                      horaSelecionada +
+                                      '\nLocal: ' +
+                                      locais[localSelecionado - 1].toString(),
+                                  'Reunião AgendaMeet');
                             } else {
                               AlertDialog alerta = AlertDialog(
                                 title: Text("Problema ao criar"),
@@ -361,6 +376,24 @@ class _DropDownState extends State<TelaCriar> {
                 },
                 child: Text("Criar")),
             Text("   "),
+            ElevatedButton(
+                onPressed: () {
+                  //uso o setState para alterar o valor das variaveis
+                  setState(() {
+                    func1 = false;
+                    func2 = false;
+                    func3 = false;
+                    func4 = false;
+                    func5 = false;
+                    func6 = false;
+                    dataSelecionada = null;
+                    id = null;
+                    horaSelecionada = null;
+                    localSelecionado = null;
+                    tipoSelecionado = null;
+                  });
+                },
+                child: Text("Limpar")),
           ],
         )
       ],
@@ -368,10 +401,6 @@ class _DropDownState extends State<TelaCriar> {
   }
 }
 
-//método para a criação do evento
-Future<Resultados> criarEvento(var comando) async {
-  final Resultados resultados = await Conexao.postEvento(comando);
-
-  resultado = resultados.resultado;
-  return resultados;
+void enviarEmail(var destinatario, var mensagem, var assunto) async {
+  await email.sendMessage(mensagem, destinatario, assunto);
 }

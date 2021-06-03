@@ -6,6 +6,7 @@ var eventos = [];
 var funcionarios = [];
 var locais = [];
 var tipos = [];
+var _context;
 
 //método para receber os dados vindos da abertura da aplicação
 receberDadosExibir(var _funcionarios, var _locais, var _tipos) {
@@ -17,6 +18,7 @@ receberDadosExibir(var _funcionarios, var _locais, var _tipos) {
 class TelaExbir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return new FutureBuilder<String>(
       //aqui eu uso um FutureBuilder para poder sempre manter atualizado os eventos criados
       future: getEventos(),
@@ -137,6 +139,44 @@ class PaginaDetalhes extends StatelessWidget {
           title: Text(tipos[evento.tipo - 1].nome,
               style: TextStyle(fontSize: 20.0)),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+                onPressed: () {
+                  // configura os botões
+                  Widget confirmaButton = FlatButton(
+                      child: Text("Confirmar"),
+                      onPressed: () {
+                        Conexao.deleteEvento(evento.id.toString());
+                        Navigator.pop(_context);
+                      });
+                  Widget cancelaButton = FlatButton(
+                    child: Text("Cancelar"),
+                    onPressed: () {
+                      Navigator.pop(_context);
+                    },
+                  );
+                  // configura o  AlertDialog
+                  AlertDialog alert = AlertDialog(
+                    title: Text("Aviso"),
+                    content: Text("Concluir esta ação excluirá o evento"),
+                    actions: [
+                      confirmaButton,
+                      cancelaButton,
+                    ],
+                  );
+                  // exibe o dialogo
+                  showDialog(
+                    context: _context,
+                    builder: (BuildContext context) {
+                      return alert;
+                    },
+                  );
+                },
+                child: Icon(Icons.delete))
+          ],
+        )
       ],
     );
   }

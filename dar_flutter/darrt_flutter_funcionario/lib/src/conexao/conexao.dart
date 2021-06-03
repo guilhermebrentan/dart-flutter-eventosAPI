@@ -1,4 +1,3 @@
-//import 'dart:collection';
 import 'dart:convert';
 import 'package:darrt_flutter_funcionario/src/models/eventos_model.dart';
 import 'package:darrt_flutter_funcionario/src/models/funcionario_model.dart';
@@ -56,10 +55,21 @@ class Conexao {
     return eventos;
   }
 
-  static Future<Resultados> postEvento(String comando) async {
+  static Resultados postEvento(String comando) {
     Resultados resultados = new Resultados('resultado');
     try {
-      json = await http.post(Uri.http(api, 'eventos/' + comando));
+      json = http.post(Uri.http(api, 'eventos/' + comando));
+      resultados.fromJson(json.body);
+    } catch (Exception) {
+      print(Exception);
+    }
+    return resultados;
+  }
+
+  static Resultados deleteEvento(String comando) {
+    Resultados resultados = new Resultados('resultado');
+    try {
+      json = http.delete(Uri.http(api, 'eventos/' + comando));
       resultados.fromJson(json.body);
     } catch (Exception) {
       print(Exception);
