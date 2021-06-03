@@ -9,7 +9,7 @@ var funcionarios = [];
 var locais = [];
 var tipos = [];
 var resultado;
-var email = Email('brentan996@gmail.com', 'Guidomotoca55');
+var email = Email('brentan996@gmail.com', '********');
 
 //recebo as informações iniciais necessárias
 receberDadosCriar(var _funcionarios, var _locais, var _tipos) {
@@ -279,13 +279,13 @@ class _DropDownState extends State<TelaCriar> {
                                   'brentan996@gmail.com',
                                   'Você está relacionado para uma reunião no AgendaMeet:' +
                                       'Tipo:' +
-                                      tipos[tipoSelecionado - 1].toString() +
+                                      tipos[tipoSelecionado - 1].nome() +
                                       '\nData: ' +
                                       dataSelecionada +
                                       '\nHorario: ' +
                                       horaSelecionada +
                                       '\nLocal: ' +
-                                      locais[localSelecionado - 1].toString(),
+                                      locais[localSelecionado - 1].nome(),
                                   'Reunião AgendaMeet');
                             } else {
                               AlertDialog alerta = AlertDialog(
